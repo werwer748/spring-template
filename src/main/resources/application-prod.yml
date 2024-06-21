@@ -1,0 +1,6 @@
+spring:
+  #TODO 운영 데이터베이스 연결
+
+logging:
+  level:
+    com.hugo.springapiapp: info # TODO 패킺니 수정

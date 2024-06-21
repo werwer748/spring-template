@@ -1,0 +1,5 @@
+서버 상태 체크 API 구현
+
+1. 애플리케이션이 정상적으로 동작하고 있는지를 확인하기 위한 health check용 api
+2. url : localhost:8080/api/health
+3. 반환 결과 : {“health":"ok","activeProfiles":["dev"]}

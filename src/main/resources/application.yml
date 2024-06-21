@@ -1,0 +1,71 @@
+## 실행하는 profile에 따라서 yml에 default로 설정해둔 값이 오버라이드 된다.
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  #TODO 개발 데이터베이스 연결
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      # create, create-drop, update, validate, none
+      ddl-auto: create
+    show-sql: true # 콘솔에 sql
+    properties:
+      hibernate:
+        format_sql: true # 콘솔에 출력되는 sql문을 정렬해서 보여줌
+        default_batch_fetch_size: 500 # 일대다 컬렉션 조회시 성능 최적화
+    open-in-view: false # 영속성 컨텍스트의 생존 범위를 트랜잭션 범위로 한정
+
+  servlet:
+    multipart:
+      max-file-size: 10MB # 파일 업로드 요청 시 하나의 파일 크기를 10MB로 제한
+      max-request-size: 100MB # 파일 업로드 요청 시 모든 파일 크기합을 100MB로 제한
+      
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 5000 # 3 Way Handshake 과정에서 5초내에 연결없을시 에러
+            read-timeout: 5000 # 응답 5초이내 오지않으면 에러
+
+
+logging:
+  level:
+    com.hugo.springapiapp: debug # 개발환경에서만 api 로그 확인을 위해서.. => 운영에서 이거까지 로그찍으면 성능딸릴지도 모름
+    org.hibernate.type: debug #  콘솔창에 조건에 바인딩되는 값 및 조회 결과 출력
+
+kakao:
+  client:
+#    id: 82724b56326694bf4d3d836f7dcd23fc
+    id: ENC(jx1ujCwak1n3izItgyWkpkkPQ6RmKS/LITT573X7RXkTiJHfw2d6IjUzMtRen8QK)
+#    secret: 9Ixh4Xg9Ylkyno3qOBRmOC96BsNNzx6m
+    secret: ENC(JFHkdH02OXEDx1k1M4FhTA/Z6V2yPVCUz3scKZ0ADdYT1hYhN8w3DI38aYL/2qtx)
+
+token:
+#  secret: and0LXRva2VuLXNlY3JldA==1234567asdasdasdasdasdasdasdasdasdasdasdasdasd # 임의의 문자열(꽤 길어야 됨)
+  secret: ENC(kxvpMgUvKzdx842WM4yFpJz6FTikRWZV6b69LMLckCNBQfwBDNaIWdiygzpTcDXiHr59rayNmV1waH21ulobBtsdVi6nu/ng10By3BmXoF0=) # 임의의 문자열(꽤 길어야 됨)
+  access-token-expiration-time: 900000 # 15분 1000(ms) x 60(s) x 15(m)
+#  access-token-expiration-time: 1 # 테스트용
+  refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
+#  refresh-token-expiration-time: 1 # 테스트용
+
+jasypt:
+  # -Djasypt.password=rkdwnsrlWkdWkdaos!@!@&&5462
+  password: ${PASSWORD}
+
+#jasypt:
+#  encryptor:
+#    password: ${JASYPT_ENCRYPTOR_PASSWORD}  # 환경 변수로 설정한 Jasypt 암호화 비밀번호 - 리눅스환경에 세팅해서...
+springdoc:
+  api-docs:
+    enabled: true
+
+
